@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.5.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="06.1 NodeNode接口属性    写入时 读取时    node.innerHTML 转化标签 转化标签   node.textContent 不转化标签 不转化标签    Node.nodeType    –返回节点类型 Node.nodeName    –返回节点名称 Node.nodeValue –可读写，返回文本值，只用于文本节点 Node.textContent–如上表格 Nod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM简易查询">
+<meta property="og:url" content="http://example.com/2021/11/04/DOM%E7%AE%80%E6%98%93%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="World-Walk">
+<meta property="og:description" content="06.1 NodeNode接口属性    写入时 读取时    node.innerHTML 转化标签 转化标签   node.textContent 不转化标签 不转化标签    Node.nodeType    –返回节点类型 Node.nodeName    –返回节点名称 Node.nodeValue –可读写，返回文本值，只用于文本节点 Node.textContent–如上表格 Nod">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-04T06:22:54.000Z">
+<meta property="article:modified_time" content="2021-11-04T06:23:47.305Z">
+<meta property="article:author" content="北海鸦">
+<meta property="article:tag" content="DOM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/04/DOM%E7%AE%80%E6%98%93%E6%9F%A5%E8%AF%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/04/DOM%E7%AE%80%E6%98%93%E6%9F%A5%E8%AF%A2/","path":"2021/11/04/DOM简易查询/","title":"DOM简易查询"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DOM简易查询 | World-Walk</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">World-Walk</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#06-1-Node"><span class="nav-number">1.</span> <span class="nav-text">06.1 Node</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node%E6%8E%A5%E5%8F%A3%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">Node接口属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">Node接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NodeList%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.3.</span> <span class="nav-text">NodeList接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTMLCollection%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">HTMLCollection接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ParentNode%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.5.</span> <span class="nav-text">ParentNode接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChildNode%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.6.</span> <span class="nav-text">ChildNode接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-2-Document"><span class="nav-number">2.</span> <span class="nav-text">6.2 Document</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">文档静态属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E7%8A%B6%E6%80%81%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">文档状态属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">其他属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-3-Element"><span class="nav-number">3.</span> <span class="nav-text">6.3 Element</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E7%89%B9%E6%80%A7%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">元素特性属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E7%8A%B6%E6%80%81%E5%B1%9E%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">元素状态属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">实例方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-5-Text%E8%8A%82%E7%82%B9%E5%92%8CDocumentFragment%E8%8A%82%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">6.5 Text节点和DocumentFragment节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-1"><span class="nav-number">4.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-7%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">6.7事件类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WheelEvent%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.1.</span> <span class="nav-text">WheelEvent接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ProgressEvent-%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.2.</span> <span class="nav-text">ProgressEvent 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DragEvent%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.3.</span> <span class="nav-text">DragEvent接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MouseEvent%E6%8E%A5%E5%8F%A3%E5%B1%9E%E6%80%A7"><span class="nav-number">5.4.</span> <span class="nav-text">MouseEvent接口属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.5.</span> <span class="nav-text">鼠标事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.6.</span> <span class="nav-text">键盘事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.7.</span> <span class="nav-text">进度事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%96%E6%8B%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.8.</span> <span class="nav-text">拖拉事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Touch%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.9.</span> <span class="nav-text">Touch触摸事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.10.</span> <span class="nav-text">表单事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.11.</span> <span class="nav-text">资源事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session%E5%8E%86%E5%8F%B2%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.12.</span> <span class="nav-text">session历史事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E7%8A%B6%E6%80%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.13.</span> <span class="nav-text">网页状态事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.14.</span> <span class="nav-text">窗口事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%AA%E5%88%87%E6%9D%BF%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.15.</span> <span class="nav-text">剪切板事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%84%A6%E7%82%B9%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.16.</span> <span class="nav-text">焦点事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">CSS操作</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">北海鸦</p>
+  <div class="site-description" itemprop="description">学习中的入门者</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/DOM%E7%AE%80%E6%98%93%E6%9F%A5%E8%AF%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="北海鸦">
+      <meta itemprop="description" content="学习中的入门者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="World-Walk">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DOM简易查询
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-04 14:22:54 / 修改时间：14:23:47" itemprop="dateCreated datePublished" datetime="2021-11-04T14:22:54+08:00">2021-11-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="06-1-Node"><a href="#06-1-Node" class="headerlink" title="06.1 Node"></a>06.1 Node</h1><h2 id="Node接口属性"><a href="#Node接口属性" class="headerlink" title="Node接口属性"></a>Node接口属性</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>写入时</th>
+<th>读取时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>node.innerHTML</td>
+<td>转化标签</td>
+<td>转化标签</td>
+</tr>
+<tr>
+<td>node.textContent</td>
+<td>不转化标签</td>
+<td>不转化标签</td>
+</tr>
+</tbody></table>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc5">Node.nodeType</a>    –返回节点类型</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc6">Node.nodeName</a>    –返回节点名称</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc7">Node.nodeValue</a> –可读写，返回文本值，只用于文本节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc8">Node.textContent</a>–如上表格</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc9">Node.baseURI</a>–返回文档地址</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc10">Node.ownerDocument</a>–返回顶层文档对象，document</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc11">Node.nextSibling</a>–下一个同级节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc12">Node.previousSibling</a>–上一个</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc13">Node.parentNode</a>–父节点（元素、文档、文档片段）</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc14">Node.parentElement</a>–父元素节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc15">Node.firstChild，Node.lastChild</a>–子节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc16">Node.childNodes</a>–子节点集合</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc17">Node.isConnected</a>–返回布尔值，当前节点是否在文档中</li>
+</ul>
+<h2 id="Node接口"><a href="#Node接口" class="headerlink" title="Node接口"></a>Node接口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc19">Node.appendChild()</a>–末端插入</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc20">Node.hasChildNodes()</a>–布尔值，是否有子节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc21">Node.cloneNode()</a>–克隆节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc22">Node.insertBefore()</a>–插入节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc23">Node.removeChild()</a>–移除节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc24">Node.replaceChild()</a>–置换节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc25">Node.contains()</a>–是否包含某节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc26">Node.compareDocumentPosition()</a>–比较节点位置</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc27">Node.isEqualNode()，Node.isSameNode()</a>–判断相似&amp;相同</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc28">Node.normalize()</a>–清理内部文本节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc29">Node.getRootNode()</a>–返回当前文档根节点</li>
+</ul>
+<h2 id="NodeList接口"><a href="#NodeList接口" class="headerlink" title="NodeList接口"></a>NodeList接口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc32">NodeList.prototype.length</a>–长度</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc33">NodeList.prototype.forEach()</a>–遍历</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc34">NodeList.prototype.item()</a>–返回某位置的成员</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc35">NodeList.prototype.keys()，NodeList.prototype.values()，NodeList.prototype.entries()</a>–</li>
+</ul>
+<h2 id="HTMLCollection接口"><a href="#HTMLCollection接口" class="headerlink" title="HTMLCollection接口"></a>HTMLCollection接口</h2><h2 id="ParentNode接口"><a href="#ParentNode接口" class="headerlink" title="ParentNode接口"></a>ParentNode接口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc42">ParentNode.children</a>–元素子节点</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc43">ParentNode.firstElementChild</a>–</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc44">ParentNode.lastElementChild</a>–</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc45">ParentNode.childElementCount</a>–</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc46">ParentNode.append()，ParentNode.prepend()</a>–</li>
+</ul>
+<h2 id="ChildNode接口"><a href="#ChildNode接口" class="headerlink" title="ChildNode接口"></a>ChildNode接口</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc48">ChildNode.remove()</a>–</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc49">ChildNode.before()，ChildNode.after()</a>–逗号隔开，可加多个</li>
+<li><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/dom/node.html#toc50">ChildNode.replaceWith()</a>–替换</li>
+</ul>
+<h1 id="6-2-Document"><a href="#6-2-Document" class="headerlink" title="6.2 Document"></a>6.2 Document</h1><h2 id="文档静态属性"><a href="#文档静态属性" class="headerlink" title="文档静态属性"></a>文档静态属性</h2><p>document.links–返回当前文档所有设定了<code>href</code>属性的<code>&lt;a&gt;</code>及<code>&lt;area&gt;</code>节点</p>
+<p>document.documentURL–继承自<code>Document</code>接口，可用于所有文档</p>
+<p>document.URL–继承自<code>HTMLDocument</code>接口，只能用于 HTML 文档</p>
+<p>document.domain–返回当前文档的域名，不包含协议和接口</p>
+<p>document.location–</p>
+<p>document.lastModified–文档最后修改时间</p>
+<p>document.title–文档标题，可写</p>
+<p>document.characterSet–返回当前文档的编码</p>
+<p>document.referrer–表示当前文档的访问者来自哪里</p>
+<p>document.dir–文字方向</p>
+<p>document.compatMode–返回浏览器处理文档的模式</p>
+<h2 id="文档状态属性"><a href="#文档状态属性" class="headerlink" title="文档状态属性"></a>文档状态属性</h2><p>document.hidden–页面是否可见，一般配合Page Visibility API</p>
+<p>document.visibilityState–返回文档的可见状态</p>
+<p>document.readyState–返回当前文档的状态</p>
+<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><p>document.cookie–操作浏览器 Cookie</p>
+<p>document.designMode–控制当前文档是否可编辑</p>
+<p>document.implementation–创建独立于当前文档的新DocumentType对象</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>document.elementFromPoint(x,y)–返回指定位置最上层元素节点</p>
+<p>document.elementsFromPoint(x,y)–返回指定位置元素节点组</p>
+<p>document.creatElement()–生成元素节点</p>
+<p>document.creatTextNode()–生成文本节点</p>
+<p>document.creatAttribute()–生成属性节点</p>
+<p>document.createComment()–生成注释节点</p>
+<p>document.createDocumentFragment()–生成空的文档片段节点</p>
+<p>document.addEventListener()，document.removeEventListener()，document.dispatchEvent()–触发事件</p>
+<p>document.hasFocus-返回一个布尔值，表示当前文档之中是否有元素被激活或获得焦点。</p>
+<h1 id="6-3-Element"><a href="#6-3-Element" class="headerlink" title="6.3 Element"></a>6.3 Element</h1><h2 id="元素特性属性"><a href="#元素特性属性" class="headerlink" title="元素特性属性"></a>元素特性属性</h2><p>element.id    –<br>                tagName<br>                dir<br>                draggable    –    拖动<br>                lang    –    语言设置<br>                tabIndex    –    遍历顺序<br>                title    –    鼠标悬浮时弹出的文字提示框</p>
+<h2 id="元素状态属性"><a href="#元素状态属性" class="headerlink" title="元素状态属性"></a>元素状态属性</h2><p>element.hidden – 是否可见，可读写<br>                contentEditable &amp; isContentEditable – 元素内容是否可编辑<br>                attributes – 返回属性对象 attr.name , attr.value<br>                className &amp; classList<br>                dataset – 自定义属性<br>                innerHTML<br>                outerHTML – 返回字符串<br>                clientHeight &amp; clientWidth  – con+padding高度，document.documentElement.clientHeight : 浏览器窗口高度<br>document.body.clientHeight : 网页总高度</p>
+<p>​                scrollHeight – 元素总高度<br>​                offsetHeight – 加上边框</p>
+<p>element.classList.add()<br>                                remove()<br>                                contains() – 检查是否包含<br>                                toggle( ，) –<br>                                item()<br>                                toString() – 将class列表转化为字符串</p>
+<h2 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h2><p>elemrnt.getAttribute() – 接受一个字符串作为参数，返回同名属性的值</p>
+<p>​                getAttributeNames() – 返回数组，后去所有属性名字</p>
+<p>​                setAttribute() - -设置属性</p>
+<p>​                hasAttribute() – 是否有指定属性</p>
+<p>​                hasAttributes() – 是否有属性</p>
+<p>​                removeAttribute() – 移除属性</p>
+<p>​                getBoundingClientRect() – 获取位置，高宽信息，对象</p>
+<p>​                getClientRects() – 同上，数组</p>
+<p>​                insertAdjacentElement(position, element) – 插入元素</p>
+<p>​                focus()，blur() – 获得焦点，移除焦点</p>
+<h1 id="6-5-Text节点和DocumentFragment节点"><a href="#6-5-Text节点和DocumentFragment节点" class="headerlink" title="6.5 Text节点和DocumentFragment节点"></a>6.5 Text节点和DocumentFragment节点</h1><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>data == nodeValue  – 获取文本内容，可设置</p>
+<p>length – 文本长度</p>
+<h2 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h2><ul>
+<li><code>appendData()</code>：在<code>Text</code>节点尾部追加字符串。</li>
+<li><code>deleteData()</code>：删除<code>Text</code>节点内部的子字符串，第一个参数为子字符串开始位置，第二个参数为子字符串长度。</li>
+<li><code>insertData()</code>：在<code>Text</code>节点插入字符串，第一个参数为插入位置，第二个参数为插入的子字符串。</li>
+<li><code>replaceData()</code>：用于替换文本，第一个参数为替换开始位置，第二个参数为需要被替换掉的长度，第三个参数为新加入的字符串。</li>
+<li><code>subStringData()</code>：用于获取子字符串，第一个参数为子字符串在<code>Text</code>节点中的开始位置，第二个参数为子字符串长度。</li>
+</ul>
+<p>remove()</p>
+<p>splitText() – 分割字符串</p>
+<h1 id="6-7事件类型"><a href="#6-7事件类型" class="headerlink" title="6.7事件类型"></a>6.7事件类型</h1><h2 id="WheelEvent接口"><a href="#WheelEvent接口" class="headerlink" title="WheelEvent接口"></a>WheelEvent接口</h2><p>e.deltaX – 滚轮的水平滚动量</p>
+<p>e.deltaMode – 数值，表示上面三个属性的单位，0是像素，1是行，2是页</p>
+<h2 id="ProgressEvent-接口"><a href="#ProgressEvent-接口" class="headerlink" title="ProgressEvent 接口"></a>ProgressEvent 接口</h2><p>外部资源加载进度</p>
+<p>lengthComputable – 加载的总量是否可以计算</p>
+<p>loaded – 已经加载的总量</p>
+<p>total – 需要加载的总量</p>
+<h2 id="DragEvent接口"><a href="#DragEvent接口" class="headerlink" title="DragEvent接口"></a>DragEvent接口</h2><p>e.DataTransfer.dropEffect</p>
+<p>DataTransfer.effectAllowed</p>
+<p>​                        .files</p>
+<p>​                        .types</p>
+<p>​                        .items</p>
+<p>​                        setData()</p>
+<p>​                        getData()</p>
+<p>​                        clearData()</p>
+<p>​                        setDragImage()</p>
+<h2 id="MouseEvent接口属性"><a href="#MouseEvent接口属性" class="headerlink" title="MouseEvent接口属性"></a>MouseEvent接口属性</h2><p>screenX – 屏幕位置</p>
+<p>clientX – 窗口位置</p>
+<p>offsetX – 目标节点padding边缘位置</p>
+<p>pageX – 文档位置</p>
+<p>ctrlKey / shiftKey / altKey / metaKey – 是否同时按下此键</p>
+<p>button – 按下的键，mousedown / up可用，click不可用</p>
+<p>relatedTarget</p>
+<p>e.getModifierState() – 是否按下特定键</p>
+<h2 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h2><p>click–单击<br>dblclick–双击<br>mousedown–按下触发。<br>mouseup–释放触发。<br>mousemove–内部移动触发<br>mouseenter–鼠标进入一个节点时触发，进入子节点不会触发这个事件<br>mouseout–鼠标离开一个节点时触发，离开父节点也会触发这个事件<br>mouseover–鼠标进入一个节点时触发，进入子节点会再一次触发这个事件<br>mouseleave–鼠标离开一个节点时触发，离开父节点不会触发这个事件<br>contextmenu–右键触发<br>wheel–滚轮触发</p>
+<h2 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h2><p>keydown</p>
+<p>keypress</p>
+<p>keyup</p>
+<ul>
+<li><code>key</code>：字符串，当前按下的键，默认为空字符串。</li>
+<li><code>code</code>：字符串，表示当前按下的键的字符串形式，默认为空字符串。</li>
+<li><code>location</code>：按下的键在键盘哪个区域</li>
+<li><code>ctrlKey</code>：布尔值，是否按下 Ctrl 键，默认为<code>false</code>。</li>
+<li><code>shiftKey</code>：布尔值，是否按下 Shift 键，默认为<code>false</code>。</li>
+<li><code>altKey</code>：布尔值，是否按下 Alt 键，默认为<code>false</code>。</li>
+<li><code>metaKey</code>：布尔值，是否按下 Meta 键，默认为<code>false</code>。</li>
+<li><code>repeat</code>：布尔值，是否重复按键，默认为<code>false</code>。</li>
+</ul>
+<p>KeyboardEvent.getModifierState() – 是否按下指定功能键</p>
+<h2 id="进度事件"><a href="#进度事件" class="headerlink" title="进度事件"></a>进度事件</h2><p>abort</p>
+<p>error</p>
+<p>load</p>
+<p>loadstart</p>
+<p>loadend</p>
+<p>progress</p>
+<p>timeout</p>
+<h2 id="拖拉事件"><a href="#拖拉事件" class="headerlink" title="拖拉事件"></a>拖拉事件</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">draggable</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>drag – 拖拉过程持续触发</p>
+<p>dragstart – 开始拖拉</p>
+<p>dragend – 拖拉结束</p>
+<p>dragenter , dragover , drop</p>
+<h2 id="Touch触摸事件"><a href="#Touch触摸事件" class="headerlink" title="Touch触摸事件"></a>Touch触摸事件</h2><h2 id="表单事件"><a href="#表单事件" class="headerlink" title="表单事件"></a>表单事件</h2><p>select – 选中文本时触发 ，， input，textarea</p>
+<p>change – 值改变时触发</p>
+<p>invalid – 表单元素不满足校验条件时触发</p>
+<p>reset , submit – 重置，提交时触发 ，对象是form</p>
+<h2 id="资源事件"><a href="#资源事件" class="headerlink" title="资源事件"></a>资源事件</h2><p>beforeload – 资源卸载前触发</p>
+<p>unload</p>
+<p>load – 资源加载成功时触发</p>
+<h2 id="session历史事件"><a href="#session历史事件" class="headerlink" title="session历史事件"></a>session历史事件</h2><h2 id="网页状态事件"><a href="#网页状态事件" class="headerlink" title="网页状态事件"></a>网页状态事件</h2><h2 id="窗口事件"><a href="#窗口事件" class="headerlink" title="窗口事件"></a>窗口事件</h2><p>scroll – 滚动事件</p>
+<p>resize – 窗口大小改变时触发</p>
+<p>fullscreenchange , fullscreenerror – 进入或退出全屏时触发</p>
+<h2 id="剪切板事件"><a href="#剪切板事件" class="headerlink" title="剪切板事件"></a>剪切板事件</h2><p>cut – 将选中的内容从文档中移除，加入剪贴板时触发。<br>copy – 进行复制动作时触发。<br>paste – 剪贴板内容粘贴到文档后触发。</p>
+<h2 id="焦点事件"><a href="#焦点事件" class="headerlink" title="焦点事件"></a>焦点事件</h2><p>focus – 元素节点获得焦点后触发，该事件不会冒泡。<br>blur – 元素节点失去焦点后触发，该事件不会冒泡。<br>focusin – 元素节点将要获得焦点时触发，发生在<code>focus</code>事件之前。该事件会冒泡。<br>focusout – 元素节点将要失去焦点时触发，发生在<code>blur</code>事件之前。该事件会冒泡。</p>
+<h1 id="CSS操作"><a href="#CSS操作" class="headerlink" title="CSS操作"></a>CSS操作</h1><p>cssText – 批量修改style</p>
+<p>length – 样式数量</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DOM/" rel="tag"># DOM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/04/Ajax-3-axios/" rel="prev" title="Ajax(3)-axios">
+                  <i class="fa fa-chevron-left"></i> Ajax(3)-axios
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/04/Promise/" rel="next" title="Promise">
+                  Promise <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">北海鸦</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
